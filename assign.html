@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location-Based Access</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .popup input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .popup button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="locationPopup" class="popup">
+        <h2>Location Check</h2>
+        <button onclick="getLocation()">Get Location</button>
+    </div>
+
+    <div id="credentialsPopup" class="popup">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="checkCredentials()">Submit</button>
+    </div>
+
+    <script>
+        const allowedLocations = ['punjab', 'haryana', 'chandigarh'];
+        const correctUsername = 'user';
+        const correctPassword = 'hello';
+
+        function getLocation() {
+            // Simulating location retrieval
+            // In a real-world scenario, use Geolocation API or similar
+            const location = prompt("Enter your location (punjab, haryana, chandigarh):").toLowerCase();
+
+            if (allowedLocations.includes(location)) {
+                document.getElementById('locationPopup').style.display = 'none';
+                document.getElementById('credentialsPopup').style.display = 'block';
+            } else {
+                alert('Access Denied');
+            }
+        }
+
+        function checkCredentials() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username === correctUsername && password === correctPassword) {
+                window.location.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent('punjab, haryana, chandigarh')}`;
+            } else {
+                alert('Wrong Credentials');
+            }
+        }
+
+        // Show the location popup on page load
+        window.onload = function() {
+            document.getElementById('locationPopup').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
